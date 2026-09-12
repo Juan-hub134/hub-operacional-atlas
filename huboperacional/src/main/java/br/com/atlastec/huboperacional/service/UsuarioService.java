@@ -7,8 +7,10 @@ import br.com.atlastec.huboperacional.model.Usuario;
 import br.com.atlastec.huboperacional.repository.RegistroRepository;
 import br.com.atlastec.huboperacional.repository.UsuarioRepository;
 import com.auth0.jwt.JWT;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.swing.*;
 import java.util.Optional;
@@ -18,10 +20,12 @@ public class UsuarioService {
     private final PasswordEncoder encoder;
     private final UsuarioRepository usuarioRepository;
     private final RegistroRepository registroRepository;
-    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encoder, RegistroRepository registroRepository) {
+    private final TokenService tokenService;
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder encoder, RegistroRepository registroRepository, TokenService tokenService) {
         this.usuarioRepository = usuarioRepository;
         this.encoder = encoder;
         this.registroRepository = registroRepository;
+        this.tokenService = tokenService;
     }
     public void criarUsuario(UsuarioDto dados, String tipoUsuario){
         Usuario usuario = new Usuario();
@@ -38,9 +42,10 @@ public class UsuarioService {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(dados.email());
         if(usuario.isPresent()){
             if(encoder.matches(dados.senha(),usuario.get().getSenha())){
-
+               return tokenService.gerarToken(usuario.get());
             }
         }
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Credenciais inválidas");
     }
 
 }

@@ -13,8 +13,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/registro").hasRole("admin")
-                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/atlas/registro").hasRole("admin")
+                        .requestMatchers("/atlashub/login").permitAll()
                         .anyRequest().authenticated())
                         .oauth2ResourceServer(oauth2 -> oauth2
                        .jwt(jwt -> {}) //configurar o backand para receber o token

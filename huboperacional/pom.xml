@@ -88,6 +88,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
+		<dependency>
+			<!-- dependência para poder converte os Bytes, porque o powerShell gerou uma chave com PKCS#1: -->
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk18on</artifactId>
+			<version>1.85</version>
+		</dependency>
 	</dependencies>
 
 	<build>

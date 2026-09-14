@@ -32,8 +32,14 @@ public class RegistroController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @PostMapping("/checarLogin")
-    public String checarLogin(@RequestBody LoginDto login){
-        return usuarioService.verificarUsuario(login);
+    @PostMapping("/login")
+    public ResponseEntity<String> checarLogin(@RequestBody LoginDto login){
+        try {
+             System.out.println("Chegou login");
+             String token = usuarioService.verificarUsuario(login);
+             return ResponseEntity.ok(token);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
     }
 }

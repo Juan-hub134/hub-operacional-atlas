@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer idUsuario;
     @OneToOne //cardinialidade 1:1, olha o diagrama quando for revisitar o código.
     @MapsId // referencia o id que vem da tabela registro

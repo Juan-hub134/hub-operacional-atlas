@@ -24,13 +24,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/atlashub/registro").permitAll()
+                        .requestMatchers("/atlashub/registro").hasRole("admin")
                         .requestMatchers("/atlashub/cadastro").permitAll()
                         .requestMatchers("/atlashub/login").permitAll()
                         .anyRequest().authenticated())
-                        .oauth2ResourceServer(oauth2 -> oauth2
-                       .jwt(jwt -> {}) //configurar o backand para receber o token
-                     );
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> {}) //configurar o backand para receber o token
+                );
         return http.build();
     }
     @Bean

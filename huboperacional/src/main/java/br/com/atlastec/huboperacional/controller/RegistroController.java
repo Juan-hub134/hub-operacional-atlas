@@ -18,7 +18,7 @@ public class RegistroController {
         this.registroService = registroService;
         this.usuarioService = usuarioService;
     }
-    @PostMapping("/registro")
+    @PostMapping("/admin/registro")
     public String registrarToken(@RequestBody TipoDto registro){
         return registroService.registrarToken(registro);
     }

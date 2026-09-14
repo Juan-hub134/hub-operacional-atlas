@@ -8,7 +8,6 @@ public class Treinamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @ManyToOne // anotacao de n:1
-    @MapsId
     @JoinColumn(name = "id_usuario")
     private Usuario idUsuario;
     private String area; //backend ou frontend

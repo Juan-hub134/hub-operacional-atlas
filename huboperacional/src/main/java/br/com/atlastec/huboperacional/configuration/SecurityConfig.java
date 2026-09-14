@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPublicKey;
+import java.util.Date;
 
 @Configuration
 public class SecurityConfig {
@@ -24,7 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/atlashub/registro").hasRole("admin")
+                        .requestMatchers("/atlashub/admin/registro").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/cadastro").permitAll()
                         .requestMatchers("/atlashub/login").permitAll()
                         .anyRequest().authenticated())

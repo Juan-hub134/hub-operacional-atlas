@@ -25,9 +25,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/atlashub/admin/registro").hasAuthority("SCOPE_admin")
-                        .requestMatchers("/atlashub/cadastro").permitAll()
-                        .requestMatchers("/atlashub/login").permitAll()
+                        .requestMatchers("/atlashub/api/admin/registro").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/upload").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/arquivo/lista").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/{id}/admin/arquivo/download").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/{id}/admin/arquivo/remover").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/cadastro").permitAll()
+                        .requestMatchers("/atlashub/api/login").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> {}) //configurar o backand para receber o token

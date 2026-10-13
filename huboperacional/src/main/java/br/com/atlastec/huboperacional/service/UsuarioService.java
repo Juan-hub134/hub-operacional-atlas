@@ -47,5 +47,4 @@ public class UsuarioService {
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Credenciais inválidas");
     }
-
 }

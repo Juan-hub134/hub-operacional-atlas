@@ -16,7 +16,7 @@ public class TreinamentoController {
     public TreinamentoController(TreinamentoService treinamentoService) {
         this.treinamentoService = treinamentoService;
     }
-    @PostMapping("/treinamento")
+    @PostMapping("/api/treinamento")
     public void gerirTreinamento(@RequestBody TreinamentoDto treinamentoDto, @AuthenticationPrincipal Jwt jwt){
         String sub = jwt.getSubject();
         treinamentoService.acompanharTreinamento(treinamentoDto, sub);

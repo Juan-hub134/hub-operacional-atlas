@@ -18,11 +18,11 @@ public class RegistroController {
         this.registroService = registroService;
         this.usuarioService = usuarioService;
     }
-    @PostMapping("/admin/registro")
+    @PostMapping("/api/admin/registro")
     public String registrarToken(@RequestBody TipoDto registro){
         return registroService.registrarToken(registro);
     }
-    @PostMapping("/cadastro")
+    @PostMapping("/api/cadastro")
     public ResponseEntity<String> cadastrarUsuario(@RequestBody UsuarioDto usuario){
         try {
             String tipoUsuario =  registroService.validarToken(usuario.token());
@@ -32,7 +32,7 @@ public class RegistroController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @PostMapping("/login")
+    @PostMapping("/api/login")
     public ResponseEntity<String> checarLogin(@RequestBody LoginDto login){
         try {
              System.out.println("Chegou login");

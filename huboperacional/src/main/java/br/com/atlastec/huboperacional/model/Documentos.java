@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 public class Documentos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
-    String titulo;
+    private int id;
+    private String titulo;
     @Column(name = "tipo")
-    String tipoDocumento;
-    byte[] documento;
-    LocalDateTime data;
+    private String tipoDocumento;
+    private byte[] documento;
+    private LocalDateTime data;
     public Documentos() {
     }
 

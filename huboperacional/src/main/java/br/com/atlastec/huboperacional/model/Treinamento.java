@@ -3,6 +3,7 @@ package br.com.atlastec.huboperacional.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "treinamento")
 public class Treinamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

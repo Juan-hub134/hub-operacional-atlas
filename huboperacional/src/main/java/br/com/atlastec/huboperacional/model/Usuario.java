@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(name = "usuario")
 public class Usuario implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer idUsuario;
     @OneToOne //cardinialidade 1:1, olha o diagrama quando for revisitar o código.

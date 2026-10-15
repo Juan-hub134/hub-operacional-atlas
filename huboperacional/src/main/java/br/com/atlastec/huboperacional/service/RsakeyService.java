@@ -58,42 +58,38 @@ public class RsakeyService {
         try {
             Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
             String key = Files.readString(path);// seria ler o caminho, ler o path
-
-            // Remove os cabeçalhos/rodapés e mantém APENAS os caracteres válidos de Base64
+            //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
             key = key.replaceAll("-----BEGIN[^-]+-----", "")
                     .replaceAll("-----END[^-]+-----", "")
                     .replaceAll("[^A-Za-z0-9+/=]", "");
-
             //(Base64)Chave de ferramenta, (getDecoder) chave de fenda, (decode) aperta parafuso!
             byte[] bytesDecodificados = Base64.getDecoder().decode(key);
-
             //PCKS8 é usado em chave privadas, passamos as intâncias com os bytes para variável spec(especificao)
             PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytesDecodificados);
-
             //usamos KeyFactory para específica o algoritmo, nese caso RSA 256, chave privada e pública
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-
             //fazemos o cast, e específicamos que é uma chave privada
             return (RSAPrivateKey) keyFactory.generatePrivate(spec);
 
-        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+        }catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e){
             throw new IllegalStateException("erro ao carregarPrivateKey: " + e.getMessage(), e);
         }
     }
+
     public RSAPublicKey carregarPublicKey() {
         try {
             Path path = Paths.get(System.getenv("RSA_PUBLIC_KEY_PATH"));//
             String key = Files.readString(path);
-            key = key.replaceAll("-----BEGIN.*-----", "")
-                    .replaceAll("-----END.*-----", "")
-                    .replaceAll("\\s", "");
+            key = key.replaceAll("-----BEGIN[^-]+-----", "")
+                    .replaceAll("-----END[^-]+-----", "")
+                    .replaceAll("[^A-Za-z0-9+/=]", "");
             byte[] bytesDecodificados = Base64.getDecoder().decode(key);
             // X509EncodedKeySpec padrão para chave pública
             X509EncodedKeySpec spec = new X509EncodedKeySpec(bytesDecodificados);
             KeyFactory keyFactory =  KeyFactory.getInstance("RSA");
             return (RSAPublicKey) keyFactory.generatePublic(spec);
         }catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e){
-            throw new IllegalStateException("erro ao carregarPublicKey", e);
+            throw new IllegalStateException("erro ao carregarPublicKey: " + e.getMessage(), e);
         }
     }
 }

@@ -59,7 +59,7 @@ public class RsakeyService {
             Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
             String key = Files.readString(path);// seria ler o caminho, ler o path
 
-            //retirar o que está escrito em private_key.pem, deixar só o arquivo bruto
+            //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
             key = key.replaceAll("-----BEGIN[^-]+-----", "")
                     .replaceAll("-----END[^-]+-----", "")
                     .replaceAll("[^A-Za-z0-9+/=]", "");

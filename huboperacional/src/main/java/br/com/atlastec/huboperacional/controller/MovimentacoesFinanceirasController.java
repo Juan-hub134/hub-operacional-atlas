@@ -17,7 +17,7 @@ public class MovimentacoesFinanceirasController {
     public MovimentacoesFinanceirasController(MovimentacoesFinanceirasService movimentacoesFinanceirasService) {
         this.movimentacoesFinanceirasService = movimentacoesFinanceirasService;
     }
-    @PostMapping("api/admin/movimentacao/financeira")
+    @PostMapping("api/admin/registrar/  movimentacao/financeira")
     public ResponseEntity<String> registrarMovimentacaoFinanceira(@RequestBody MovimentacaoFinanceiraDto movimentacaoFinanceiraDto){
         movimentacoesFinanceirasService.registrarMovimentacoesFinanceiras(movimentacaoFinanceiraDto);
         return ResponseEntity.ok("registrado com sucesso");

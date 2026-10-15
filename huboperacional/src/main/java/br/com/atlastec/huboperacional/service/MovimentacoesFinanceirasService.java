@@ -119,7 +119,7 @@ public class MovimentacoesFinanceirasService {
     }
     //soma valores com o saldo pendente
     public BigDecimal saldoPendente(){
-        BigDecimal saldoPendente = movimentacoesFinanceirasRepository.somaSaldoPedente("pendente");
+        BigDecimal saldoPendente = movimentacoesFinanceirasRepository.saldoPendenteLiquido();
         if (saldoPendente == null){
             return  BigDecimal.ZERO;
         }

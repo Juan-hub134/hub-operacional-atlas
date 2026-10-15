@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .requestMatchers("/atlashub/api/admin/soma/saldo/pendente").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/cadastro").permitAll()
                         .requestMatchers("/atlashub/api/login").permitAll()
-                        .requestMatchers("/atlashub/api/treinamento").permitAll()
+                        .requestMatchers("/atlashub/api/treinamento").hasAnyAuthority("SCOPE_admin", "SCOPE_membro", "SCOPE_trainee")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> {}) //configurar o backand para receber o token

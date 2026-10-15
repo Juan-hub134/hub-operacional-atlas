@@ -56,7 +56,7 @@ public class RsakeyService {
 //    }
     public RSAPrivateKey carregarPrivateKey() {
                 try {
-                    Path path = Paths.get("huboperacional/src/main/resources/keys/private_key.pem");//acessar o arquivo private key da pasta keys que voce criou no shell
+                    Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
                     String key = Files.readString(path);// seria ler o caminho, ler o path
                     //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
                     key = key.replaceAll("-----BEGIN.*-----", "")
@@ -77,7 +77,7 @@ public class RsakeyService {
     }
     public RSAPublicKey carregarPublicKey() {
         try {
-            Path path = Paths.get("huboperacional/src/main/resources/keys/public_key.pem");//
+            Path path = Paths.get(System.getenv("RSA_PUBLIC_KEY_PATH"));//
             String key = Files.readString(path);
             key = key.replaceAll("-----BEGIN.*-----", "")
                     .replaceAll("-----END.*-----", "")

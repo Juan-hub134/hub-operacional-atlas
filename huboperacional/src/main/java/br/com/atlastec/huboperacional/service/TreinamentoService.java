@@ -7,6 +7,7 @@ import br.com.atlastec.huboperacional.repository.TreinamentoRepository;
 import br.com.atlastec.huboperacional.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,5 +41,18 @@ public class TreinamentoService {
             treinamentoNovo.setChecklist(treinamentoDto.checklist());
             treinamentoRepository.save(treinamentoNovo);
         }
+    }
+    public List<TreinamentoDto> listarTreinamentos(String sub) {
+        int id = Integer.parseInt(sub);
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        return treinamentoRepository.findAllByIdUsuario(usuario).stream()
+                .map(t -> new TreinamentoDto(
+                        t.getArea(),
+                        t.getDescricao(),
+                        t.isChecklist()
+                ))
+                .toList();
     }
 }

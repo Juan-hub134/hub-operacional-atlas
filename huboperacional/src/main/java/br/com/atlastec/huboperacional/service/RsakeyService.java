@@ -55,25 +55,25 @@ public class RsakeyService {
 //        throw new IllegalStateException("erro ao carregar a chave pública ", e);
 //    }
     public RSAPrivateKey carregarPrivateKey() {
-                try {
-                    Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
-                    String key = Files.readString(path);// seria ler o caminho, ler o path
-                    //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
-                    key = key.replaceAll("-----BEGIN.*-----", "")
-                            .replaceAll("-----END.*-----", "")
-                            .replaceAll("\\s", "");
-                                             //(Base64)Chave de ferramenta, (getDecoder) chave de fenda, (decode) aperta parafuso!
-                    byte[] bytesDecodificados = Base64.getDecoder().decode(key);
-                    //PCKS8 é usado em chave privadas, passamos as intâncias com os bytes para variável spec(especificao)
-                    PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytesDecodificados);
-                    //usamos KeyFactory para específica o algoritmo, nese caso RSA 256, chave privada e pública
-                    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-                    //fazemos o cast, e específicamos que é uma chave privada
-                    return (RSAPrivateKey) keyFactory.generatePrivate(spec);
+        try {
+            Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
+            String key = Files.readString(path);// seria ler o caminho, ler o path
+            //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
+            key = key.replaceAll("-----BEGIN [A-Z ]+-----", "")
+                    .replaceAll("-----END [A-Z ]+-----", "")
+                    .replaceAll("\\s", "");
+            //(Base64)Chave de ferramenta, (getDecoder) chave de fenda, (decode) aperta parafuso!
+            byte[] bytesDecodificados = Base64.getDecoder().decode(key);
+            //PCKS8 é usado em chave privadas, passamos as intâncias com os bytes para variável spec(especificao)
+            PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(bytesDecodificados);
+            //usamos KeyFactory para específica o algoritmo, nese caso RSA 256, chave privada e pública
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            //fazemos o cast, e específicamos que é uma chave privada
+            return (RSAPrivateKey) keyFactory.generatePrivate(spec);
 
-                }catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e){
-                    throw new IllegalStateException("erro ao carregarPrivateKey", e);
-                }
+        } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new IllegalStateException("erro ao carregarPrivateKey: " + e.getMessage(), e);
+        }
     }
     public RSAPublicKey carregarPublicKey() {
         try {

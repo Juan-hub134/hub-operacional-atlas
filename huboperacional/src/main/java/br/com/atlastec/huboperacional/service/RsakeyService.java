@@ -58,10 +58,12 @@ public class RsakeyService {
         try {
             Path path = Paths.get(System.getenv("RSA_PRIVATE_KEY_PATH"));//acessar o arquivo private key da pasta keys que voce criou no shell
             String key = Files.readString(path);// seria ler o caminho, ler o path
-            //retirar o que está escrindo em priavate_key.pem, deixar só o arquivo bruto
+
+            //retirar o que está escrito em private_key.pem, deixar só o arquivo bruto
             key = key.replaceAll("-----BEGIN[^-]+-----", "")
                     .replaceAll("-----END[^-]+-----", "")
                     .replaceAll("[^A-Za-z0-9+/=]", "");
+
             //(Base64)Chave de ferramenta, (getDecoder) chave de fenda, (decode) aperta parafuso!
             byte[] bytesDecodificados = Base64.getDecoder().decode(key);
             //PCKS8 é usado em chave privadas, passamos as intâncias com os bytes para variável spec(especificao)
@@ -80,9 +82,11 @@ public class RsakeyService {
         try {
             Path path = Paths.get(System.getenv("RSA_PUBLIC_KEY_PATH"));//
             String key = Files.readString(path);
+
             key = key.replaceAll("-----BEGIN[^-]+-----", "")
                     .replaceAll("-----END[^-]+-----", "")
                     .replaceAll("[^A-Za-z0-9+/=]", "");
+
             byte[] bytesDecodificados = Base64.getDecoder().decode(key);
             // X509EncodedKeySpec padrão para chave pública
             X509EncodedKeySpec spec = new X509EncodedKeySpec(bytesDecodificados);

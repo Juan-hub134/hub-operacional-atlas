@@ -30,8 +30,18 @@ public class SecurityConfig {
                         .requestMatchers("/atlashub/api/admin/arquivo/lista").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/{id}/admin/arquivo/download").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/{id}/admin/arquivo/remover").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/movimentacao/financeira").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/listar/movimentacao/financeir").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/{id}/atualizar/movimentacao/financeira").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/{id}/excluir/movimentacao/financeira").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/{id}/buscar/movimentacao/financeira").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/soma/entradas/financeiras").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/soma/saidas/financeiras").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/saldo/periodo").hasAuthority("SCOPE_admin")
+                        .requestMatchers("/atlashub/api/admin/soma/saldo/pendente").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/cadastro").permitAll()
                         .requestMatchers("/atlashub/api/login").permitAll()
+                        .requestMatchers("/atlashub/api/treinamento").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> {}) //configurar o backand para receber o token

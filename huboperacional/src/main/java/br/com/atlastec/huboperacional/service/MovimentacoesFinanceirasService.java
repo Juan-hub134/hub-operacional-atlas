@@ -24,11 +24,11 @@ public class MovimentacoesFinanceirasService {
     public void registrarMovimentacoesFinanceiras(MovimentacaoFinanceiraDto movimentacaoFinanceiraDto) {
         MovimentacoesFinanceiras movimentacoesFinanceiras = new MovimentacoesFinanceiras();
         LocalDateTime data = LocalDateTime.now();
-        movimentacoesFinanceiras.setTipo(movimentacoesFinanceiras.getTipo());
-        movimentacoesFinanceiras.setValor(movimentacoesFinanceiras.getValor());
-        movimentacoesFinanceiras.setDescricao(movimentacoesFinanceiras.getDescricao());
-        movimentacoesFinanceiras.setCategoria(movimentacoesFinanceiras.getCategoria());
-        movimentacoesFinanceiras.setStatus(movimentacoesFinanceiras.getStatus());
+        movimentacoesFinanceiras.setTipo(movimentacaoFinanceiraDto.tipo());
+        movimentacoesFinanceiras.setValor(movimentacaoFinanceiraDto.valor());
+        movimentacoesFinanceiras.setDescricao(movimentacaoFinanceiraDto.descricao());
+        movimentacoesFinanceiras.setCategoria(movimentacaoFinanceiraDto.categoria());
+        movimentacoesFinanceiras.setStatus(movimentacaoFinanceiraDto.status());
         movimentacoesFinanceiras.setData(data);
         movimentacoesFinanceirasRepository.save(movimentacoesFinanceiras);
     }
@@ -47,7 +47,7 @@ public class MovimentacoesFinanceirasService {
         }
         return listaDto;
     }
-    public void atualizarAlgumaMovimentacoesFinanceira(int id,MovimentacaoFinanceiraDto movimentacaoFinanceiraDto) {
+    public void atualizarAlgumaMovimentacoesFinanceira(int id, MovimentacaoFinanceiraDto movimentacaoFinanceiraDto) {
         Optional<MovimentacoesFinanceiras> movimentacaoFinanceiras = movimentacoesFinanceirasRepository.findById(id);
         if(movimentacaoFinanceiras.isPresent()){
             LocalDateTime data = LocalDateTime.now();
@@ -58,15 +58,17 @@ public class MovimentacoesFinanceirasService {
             movimentacaoFinanceiras.get().setStatus(movimentacaoFinanceiraDto.status());
             movimentacaoFinanceiras.get().setData(data);
             movimentacoesFinanceirasRepository.save(movimentacaoFinanceiras.get());
-        }
+        }else {
         throw new idNaoEncontradoException("id não encontrado");
+    }
     }
     public void excluirMovimentacaoFinanceiras(int id){
         Optional<MovimentacoesFinanceiras> movimentacoesFinanceiras = movimentacoesFinanceirasRepository.findById(id);
         if(movimentacoesFinanceiras.isPresent()){
             movimentacoesFinanceirasRepository.deleteById(id);
-        }
+        }else {
         throw new idNaoEncontradoException("id não encontrado");
+        }
     }
     public MovimentacaoFinanceiraDto buscarEspecificamentePorAlgumaMovimentacaoFinanceira(int id){
         Optional<MovimentacoesFinanceiras> movimentacoesFinanceiras = movimentacoesFinanceirasRepository.findById(id);
@@ -78,8 +80,9 @@ public class MovimentacoesFinanceirasService {
                     movimentacoesFinanceiras.get().getCategoria(),
                     movimentacoesFinanceiras.get().getStatus());
             return movimentacaoFinanceiraDto;
-        }
+        }else {
         throw new idNaoEncontradoException("id não encontrado");
+        }
     }
     //vai calcular todos os registro da tabela receita com o tipo receita e  status pago
     public BigDecimal somarEntradas(){
@@ -108,11 +111,18 @@ public class MovimentacoesFinanceirasService {
         return despesas;
     }
     // soma da receita  - soma da despesas
-    public BigDecimal saldoDoPerido(){
-
+    public BigDecimal saldoDoPeriodo(){
+        BigDecimal lucro = somarEntradas();
+        BigDecimal despesas = somarSaidas();
+        BigDecimal saldoDoPeriodo = lucro.subtract(despesas);
+        return saldoDoPeriodo;
     }
     //soma valores com o saldo pendente
-    public double saldoPedente(){
-        return 0;
+    public BigDecimal saldoPendente(){
+        BigDecimal saldoPendente = movimentacoesFinanceirasRepository.somaSaldoPedente("pendente");
+        if (saldoPendente == null){
+            return  BigDecimal.ZERO;
+        }
+        return saldoPendente;
     }
 }

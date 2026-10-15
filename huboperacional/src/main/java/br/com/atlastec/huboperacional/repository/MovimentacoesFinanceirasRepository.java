@@ -12,4 +12,7 @@ import java.math.BigDecimal;
 public interface MovimentacoesFinanceirasRepository extends JpaRepository<MovimentacoesFinanceiras, Integer> {
     @Query("SELECT SUM(m.valor) FROM MovimentacoesFinanceiras m WHERE m.tipo = :tipo AND m.status = :status")
     BigDecimal somarPorTipoEStatus(@Param("tipo") String tipo, @Param("status") String status);
+    @Query("SELECT SUM(m.valor) FROM MovimentacoesFinanceiras m WHERE m.status = :status")
+    BigDecimal somaSaldoPedente(@Param("status") String status);
+
 }

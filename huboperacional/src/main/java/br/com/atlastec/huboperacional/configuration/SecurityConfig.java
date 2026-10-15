@@ -25,7 +25,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/atlashub/api/admin/registro").permitAll()
+                        .requestMatchers("/atlashub/api/admin/registro").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/admin/upload").hasAuthority("SCOPE_admin")
                         .requestMatchers("/atlashub/api/admin/arquivo/lista").hasAnyAuthority("SCOPE_admin", "SCOPE_membro")
                         .requestMatchers("/atlashub/api/{id}/admin/arquivo/download").hasAnyAuthority("SCOPE_admin", "SCOPE_membro")

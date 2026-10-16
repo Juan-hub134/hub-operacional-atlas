@@ -50,7 +50,8 @@ hub-operacional-atlas/
 ├── docs/
 │   ├── api.md
 │   ├── arquitetura.md
-│   └── autenticacao.md
+│   ├── autenticacao.md
+│   └── banco-de-dados.md
 └── huboperacional/
     ├── Dockerfile
     ├── pom.xml
@@ -101,5 +102,5 @@ O serviço também depende de variáveis de configuração e segredos do banco e
 - [Endpoints da API](docs/api.md)
 - [Arquitetura do backend](docs/arquitetura.md)
 - [Autenticação e segurança](docs/autenticacao.md)
+- [Modelo de dados e relacionamentos](docs/banco-de-dados.md)
 
-A documentação do modelo relacional será complementada com o diagrama atualizado do banco de dados.
